@@ -18,20 +18,21 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
   final List<TextEditingController> otpControllers = List.generate(6, (_) => TextEditingController());
 
   void verifyOtp() {
-    String enteredOtp = otpControllers.map((controller) => controller.text).join();
-    if (enteredOtp.trim() == widget.otp) {
-      // OTP is correct, navigate to ProfileUpdater page
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ProfileUpdater()), // Navigate to ProfileUpdater()
-      );
-    } else {
-      // OTP is incorrect
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Invalid OTP. Please try again.")),
-      );
-    }
+  String enteredOtp = otpControllers.map((controller) => controller.text).join();
+  if (enteredOtp.trim() == widget.otp) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProfileUpdater(phoneNumber: widget.phoneNumber), // Pass phoneNumber
+      ),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Invalid OTP. Please try again.")),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
